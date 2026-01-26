@@ -1,6 +1,5 @@
 #  FineGrasp Jetson Orin (CUDA 12.6)
-
-This repository provides a comprehensive guide for installing and configuring **FineGrasp** on an NVIDIA Jetson Orin running **JetPack 6**. This setup is specifically optimized for detecting thin objects using **CUDA 12.6** and **Python 3.10**.
+This repository documents the specific build process for FineGrasp on NVIDIA Jetson Orin hardware. It addresses the compatibility challenges of compiling spconv, cumm, and MinkowskiEngine on aarch64 architecture with CUDA 12.6.
 ---
 
 ##  System Specifications
@@ -116,6 +115,7 @@ cd ../..
 - https://github.com/traveller59/spconv/issues/726#issuecomment-2605339303
 - https://github.com/NVIDIA/MinkowskiEngine/issues/543
 
-## Download checkpoint from huggingface.com and put it inside scripts/config/model.safetensors
-
+## Download checkpoint 
+https://huggingface.co/HorizonRobotics/FineGrasp
+Place Weights: Move the file to scripts/config/model.safetensors.
 
