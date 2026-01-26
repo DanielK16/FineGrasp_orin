@@ -127,3 +127,11 @@ cd ../..
 https://huggingface.co/HorizonRobotics/FineGrasp
 Place Weights: Move the file to scripts/config/model.safetensors.
 
+## Results using my_infer.py
+<img width="902" height="327" alt="Screenshot from 2026-01-26 15-54-49" src="https://github.com/user-attachments/assets/9ba81126-c9dc-44b4-bdd0-2a0909c6efe6" />
+
+<img width="1035" height="674" alt="Screenshot from 2026-01-26 15-55-49" src="https://github.com/user-attachments/assets/8916f275-e97f-4478-a5db-2ec2e46a4205" />
+
+<img width="1223" height="705" alt="Screenshot from 2026-01-26 15-57-19" src="https://github.com/user-attachments/assets/d2a81cd6-a546-4f37-a520-1a220cb939bb" />
+
+
