@@ -95,8 +95,8 @@ python3 setup.py install --blas=openblas --force_cuda
 cd ..
 ```
 
-## 5. Install PointNet2 and KNN
-Following files was patched inside MinkowskiEngine replace these files:
+## 5. Install PointNet2 and KNN (Scale-Balanced-Grasp)
+Following files was patched inside Scale-Balanced-Grasp replace these files:
 - src/cuda/vision.h
 - src/knn.h
 ```bash
