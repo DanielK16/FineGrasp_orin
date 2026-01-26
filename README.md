@@ -51,6 +51,8 @@ cd ..
 ```
 
 ## 3. FineGrasp & GraspNet API
+- https://github.com/HorizonRobotics/RoboOrchardLab/tree/master/projects/finegrasp_graspnet1b
+- https://github.com/graspnet/graspnetAPI
 ```bash
 # Install Robo Orchard Lab (FineGrasp)
 git clone https://github.com/HorizonRobotics/robo_orchard_lab.git
