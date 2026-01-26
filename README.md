@@ -9,6 +9,9 @@ This repository documents the specific build process for FineGrasp on NVIDIA Jet
 * **Architecture:** `aarch64` (Compute Capability 8.7)
 * **Core Libraries:** `cumm 0.7.11`, `spconv 2.3.8`, `MinkowskiEngine 0.5.4`
 
+## Credits Paper
+https://arxiv.org/pdf/2507.05978
+
 ---
 
 ## 0. Final folder structure:
