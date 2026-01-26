@@ -6,30 +6,26 @@ import scipy.io as scio
 import time
 
 def capture_raw_safe(output_dir):
-    # Reset everything to factory-like behavior
     pipeline = rs.pipeline()
     config = rs.config()
     
-    # Let's try 1280x720, but keep FPS low
     config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 6)
     config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 6)
 
-    print("🔌 Starting Pipeline...")
+    print("Starting Pipeline...")
     try:
-        # Start the pipeline
+
         profile = pipeline.start(config)
     except Exception as e:
-        print(f"❌ Pipeline failed to start: {e}")
+        print(f"Pipeline failed to start: {e}")
         print("TIP: Unplug and replug the camera, or try a different USB port.")
         return
 
-    # Warm-up is EXTREMELY important for the buffer to clear
-    print("⏳ Warming up (5 seconds)...")
-    time.sleep(5)
+    print("Warming up...")
+    time.sleep(3)
 
     try:
-        # Try to grab a frame with a massive 20-second timeout
-        print("📸 Attempting to capture one frame...")
+        print("Attempting to capture one frame...")
         frames = pipeline.wait_for_frames(timeout_ms=20000)
         
         # Align depth to color
@@ -40,7 +36,7 @@ def capture_raw_safe(output_dir):
         color_frame = aligned_frames.get_color_frame()
 
         if not depth_frame or not color_frame:
-            print("❌ Frames received but data is empty.")
+            print("Frames received but data is empty.")
             return
 
         # Data conversion
@@ -59,10 +55,10 @@ def capture_raw_safe(output_dir):
             "factor_depth": np.array([[1000.0]])
         })
         
-        print(f"✅ Success! Captured raw 720p frame to {output_dir}")
+        print(f"Success! Captured raw 720p frame to {output_dir}")
 
     except Exception as e:
-        print(f"❌ TIMEOUT: {e}")
+        print(f"TIMEOUT: {e}")
         print("Check if the camera is overheating or if the USB cable is loose.")
     finally:
         pipeline.stop()
