@@ -115,3 +115,7 @@ cd ../..
 - https://github.com/traveller59/spconv/issues/760
 - https://github.com/traveller59/spconv/issues/726#issuecomment-2605339303
 - https://github.com/NVIDIA/MinkowskiEngine/issues/543
+
+## Download checkpoint from huggingface.com and put it inside scripts/config/model.safetensors
+
+
