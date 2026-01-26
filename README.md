@@ -1,7 +1,6 @@
 # 🦾 FineGrasp Jetson Orin (CUDA 12.6)
 
-This repository provides a comprehensive guide for installing and configuring **FineGrasp** on an NVIDIA Jetson Orin running **JetPack 6**. This setup is specifically optimized for detecting thin objects (such as chopsticks) using **CUDA 12.6** and **Python 3.10**.
-
+This repository provides a comprehensive guide for installing and configuring **FineGrasp** on an NVIDIA Jetson Orin running **JetPack 6**. This setup is specifically optimized for detecting thin objects using **CUDA 12.6** and **Python 3.10**.
 ---
 
 ## 📋 System Specifications
@@ -20,7 +19,7 @@ conda create -n finegrasp python=3.10.12 -y
 conda activate finegrasp 
 
 # Install PyTorch for JetPack 6 / CUDA 12.6
-pip install -U torch torchvision torchaudio --index-url [https://pypi.jetson-ai-lab.io/jp6/cu126](https://pypi.jetson-ai-lab.io/jp6/cu126)
+pip install -U torch torchvision torchaudio --index-url https://pypi.jetson-ai-lab.io/jp6/cu126
 ```
 
 ## 2. Cumm & Spconv
@@ -107,3 +106,7 @@ cd knn
 python setup.py install --verbose
 cd ../..
 ```
+
+## Helpful Ressources & Issues for Instalation
+- https://github.com/traveller59/spconv/issues/760
+- https://github.com/NVIDIA/MinkowskiEngine/issues/543
