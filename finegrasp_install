@@ -1,0 +1,153 @@
+Environment:
+Python: 3.10
+CUDA: 12.6
+torch:
+torchvision: 
+torchaudio:
+
+# Create Environment
+conda create -n finegrasp python=3.10.12
+conda activate finegrasp 
+
+# Install Torch for correct CUDA Version
+pip install -U torch torchvision torchaudio --index-url https://pypi.jetson-ai-lab.io/jp6/cu126
+
+# Needed for spconv and cumm
+pip3 install pccm pybind11 ninja cmake
+
+# Install cumm from source 
+git clone https://github.com/FindDefinition/cumm 
+cd ./cumm
+export CUMM_CUDA_ARCH_LIST="8.7"
+export CUMM_DISABLE_JIT="1"
+git checkout v0.7.11
+pip install -e .
+
+# Install spconv from source
+git clone --depth 1 https://github.com/traveller59/spconv
+cd spconv
+export SPCONV_DISABLE_JIT="1"
+# Build the wheel
+python setup.py bdist_wheel
+pip install dist/spconv-*.whl
+
+# Issues that helped
+https://github.com/traveller59/spconv/issues/760
+https://github.com/traveller59/spconv/issues/726#issuecomment-2605339303
+
+# Check Result:
+cumm 0.7.11
+spconv 2.3.8
+python3 -c "import cumm; print(cumm.__version__)"
+python3 -c "import spconv; print(spconv.__version__)"
+
+# Clone Finegrasp
+git clone https://github.com/HorizonRobotics/robo_orchard_lab.git
+cd robo_orchard_lab && make version
+pip3 install .[finegrasp]
+pip install transformers
+# Check:
+pip show robo_orchard_lab
+python3 -c "import robo_orchard_lab; print('Robo Orchard Lab successfully loaded!')"
+
+# Install GraspNet API
+cd ~/FINE
+git clone https://github.com/graspnet/graspnetAPI.git && cd graspnetAPI
+export SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
+pip3 install .
+pip3 install transforms3d==0.4.2 numpy==1.26.4
+pip install IPython
+# to prevent error libstc++
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+mkdir -p $CONDA_PREFIX/etc/conda/deactivate.d
+echo 'export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+echo 'export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+echo 'export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+echo 'unset OLD_LD_LIBRARY_PATH' >> $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+
+# check: python3 -c "import graspnetAPI"
+
+
+#helpfull issues:
+https://github.com/Julie-tang00/Common-envs-issues/blob/main/Cuda12-MinkowskiEngine
+https://github.com/NVIDIA/MinkowskiEngine/issues/543
+
+# Install MinkowskiEngine (takes time!)
+git clone https://github.com/NVIDIA/MinkowskiEngine.git
+cd MinkowskiEngine
+# edit files
+gedit ~/FINE/MinkowskiEngine/src/3rdparty/concurrent_unordered_map.cuh
+add: #include <thrust/execution_policy.h>
+replace: thrust::device -> thrust::system::cuda::par
+
+gedit ~/FINE/MinkowskiEngine/src/convolution_kernel.cuh
+#include <memory>
+#include <vector>
+#include <thrust/execution_policy.h>
+
+gedit ~/FINE/MinkowskiEngine/src/coordinate_map_gpu.cu
+add at end of includes:
+#include <thrust/unique.h>
+#include <thrust/remove.h>
+#include <thrust/execution_policy.h>
+
+#copy edited setup.py!
+
+sudo apt-get install -y libopenblas-dev
+export CC=gcc
+export CXX=g++
+export MAX_JOBS=1
+export TORCH_CUDA_ARCH_LIST="8.7"
+export BLAS=openblas
+export CUDA_HOME="/usr/local/cuda"
+export NVCC_PREPEND_FLAGS='-std=c++17 -DNVTX_DISABLE -DCUB_SKIP_NVTX_CHECK'
+export CXXFLAGS='-std=c++17 -DNVTX_DISABLE'
+python3 setup.py install --blas=openblas --force_cuda
+
+#Check if MinkowskiEngine successfully installed
+import torch
+import MinkowskiEngine as ME
+print(f"{ME.__version__}")    => 0.5.4
+
+
+
+
+# Install pointnet2 and knn
+git clone https://github.com/mahaoxiang822/Scale-Balanced-Grasp
+cd Scale-Balanced-Grasp/pointnet2
+export MAX_JOBS=2
+export TORCH_CUDA_ARCH_LIST="8.7"
+export CUDA_HOME="/usr/local/cuda"
+export CC=gcc
+export CXX=g++
+export NVCC_CCBIN=g++
+python setup.py install --verbose
+cd ../..
+cd Scale-Balanced-Grasp/knn
+
+gedit src/cuda/vision.h
+edit code!
+
+gedit src/knn.h
+edit code!
+
+python setup.py install --verbose
+
+
+#final check if everything is installed correctly:
+python test_installed_libs.py
+
+
+# run example code
+$ touch ~/FINE/Scale-Balanced-Grasp/pointnet2/__init__.py
+(finegrasp) rric@ubuntu:~/FINE/Scale-Balanced-Grasp/pointnet2$ cp build/lib.*/pointnet2/_ext*.so .
+(finegrasp) rric@ubuntu:~/FINE/Scale-Balanced-Grasp/pointnet2$ ls _ext*.so
+_ext.cpython-310-aarch64-linux-gnu.so
+(finegrasp) rric@ubuntu:~/FINE/Scale-Balanced-Grasp/pointnet2$ ls pytorch_utils.py
+pytorch_utils.py
+
+
+
+
+
+
