@@ -39,7 +39,7 @@ def get_gripper_points(width, depth, num_points=100):
     return np.array(points)
 
 def main():
-    print("🎨 Preparing 3D Visualization...")
+    print("Preparing 3D Visualization...")
     
     # --- PATHS (Adjusted to your structure) ---
     SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -57,7 +57,7 @@ def main():
             return
 
     # --- LOAD DATA ---
-    print("⏳ Loading images and grasp results...")
+    print("Loading images and grasp results...")
     rgb = np.array(Image.open(rgb_path))
     depth = np.array(Image.open(depth_path)).astype(np.float32)
     meta = scio.loadmat(mat_path)
@@ -130,7 +130,7 @@ def main():
     # Coordinate system frame for orientation (Red=X, Green=Y, Blue=Z)
     axes = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.1, origin=[0, 0, 0])
 
-    print("\n🚀 Starting Interactive Viewer...")
+    print("\nStarting Interactive Viewer...")
     print("   [Left Click]   Rotate")
     print("   [Right Click]  Pan")
     print("   [Scroll Wheel] Zoom")
