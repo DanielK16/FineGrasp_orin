@@ -11,6 +11,10 @@ This repository documents the specific build process for FineGrasp on NVIDIA Jet
 
 ---
 
+## 0. Final folder structure:
+<img width="968" height="539" alt="image" src="https://github.com/user-attachments/assets/33fcf311-6847-4990-9e70-099d87c51128" />
+
+
 ## 1. Environment Setup
 ```bash
 # Create Conda Environment
@@ -22,7 +26,9 @@ pip install -U torch torchvision torchaudio --index-url https://pypi.jetson-ai-l
 ```
 
 ## 2. Cumm & Spconv
-These libaries must be build from source.
+These libaries must be build from source:
+- https://github.com/traveller59/spconv
+- https://github.com/FindDefinition/cumm
 ```bash
 pip3 install pccm pybind11 ninja cmake
 
