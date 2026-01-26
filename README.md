@@ -1,9 +1,9 @@
-# 🦾 FineGrasp Jetson Orin (CUDA 12.6)
+#  FineGrasp Jetson Orin (CUDA 12.6)
 
 This repository provides a comprehensive guide for installing and configuring **FineGrasp** on an NVIDIA Jetson Orin running **JetPack 6**. This setup is specifically optimized for detecting thin objects using **CUDA 12.6** and **Python 3.10**.
 ---
 
-## 📋 System Specifications
+##  System Specifications
 * **OS:** Ubuntu 22.04 (JetPack 6)
 * **Python:** 3.10.12
 * **CUDA:** 12.6
