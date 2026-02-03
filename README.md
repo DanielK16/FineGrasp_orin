@@ -85,7 +85,7 @@ Following files was patched inside MinkowskiEngine replace these files:
 git clone https://github.com/NVIDIA/MinkowskiEngine.git
 cd MinkowskiEngine
 # [OVERWRITE THE FILES ABOVE WITH PATCHED VERSIONS]
-
+sudo sed -i 's/\bauto __raw = __to_address(__r.get());/auto __raw = std::__to_address(__r.get());/' /usr/include/c++/11/bits/shared_ptr_base.h
 sudo apt-get install -y libopenblas-dev
 export CC=gcc CXX=g++ MAX_JOBS=1 # MAX_JOBS=1 prevents RAM exhaustion on Jetson
 export TORCH_CUDA_ARCH_LIST="8.7"
